@@ -19,22 +19,22 @@ public class AccountService {
     private String authToken;
     private AuthenticatedUser currentUser;
 
-    public void AccountService(String url){
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public AccountService(String url, AuthenticatedUser currentUser){
+        this.currentUser = currentUser;
         baseUrl = url;
     }
 
-    public BigDecimal getBalance(BigDecimal balance) {
-        balance = new BigDecimal(0);
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        httpHeaders.setBearerAuth(authToken);
-        HttpEntity<Account> entity = new HttpEntity<>(httpHeaders);
-
+    public BigDecimal getBalance() {
+        BigDecimal balance = new BigDecimal(0);
         try{
-            balance = restTemplate.exchange(baseUrl + "balance/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), BigDecimal.class).getBody();
-
+            balance = restTemplate.exchange(baseUrl + "account/balance/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), BigDecimal.class).getBody();
+            System.out.println("Your current account balance is: $" + balance);
         }catch (RestClientResponseException e) {
-            BasicLogger.log(e.getMessage());
+            System.out.println("Error, can't retrieve balance");
         }
         return balance;
 
