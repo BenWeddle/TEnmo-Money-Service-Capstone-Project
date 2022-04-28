@@ -40,6 +40,7 @@ public class TransfersService {
         System.out.println("-----------------------------\n"
                 + "Enter Id of user you are sending to (0 to cancel): ");
     }
+
     private HttpEntity makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(authToken);
