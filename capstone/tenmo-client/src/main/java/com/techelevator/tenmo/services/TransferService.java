@@ -1,7 +1,7 @@
 package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.Transfers;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -9,24 +9,22 @@ import org.springframework.http.HttpMethod;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
-public class TransfersService {
+public class TransferService {
     private String baseUrl;
     RestTemplate restTemplate = new RestTemplate();
     private String authToken;
     private AuthenticatedUser currentUser;
 
-    public TransfersService(String url, AuthenticatedUser currentUser){
+    public TransferService(String url, AuthenticatedUser currentUser){
         this.currentUser = currentUser;
         baseUrl = url;
     }
 
     public void sendTransfer() {
         User[] users = null;
-        Transfers transfers = new Transfers();
+        Transfer transfers = new Transfer();
 
         try {
             Scanner scanner = new Scanner(System.in);
