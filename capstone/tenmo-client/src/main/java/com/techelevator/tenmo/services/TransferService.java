@@ -1,6 +1,7 @@
 package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.DisplayTransfer;
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpEntity;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Scanner;
 
 public class TransferService {
@@ -59,9 +61,38 @@ public class TransferService {
         } catch (Exception e) {
             System.out.println("Invalid" + e.getMessage());
         }
-
-
     }
+
+        public void viewTransferHistory() {
+            DisplayTransfer[] transfers = null;
+
+
+                Scanner scanner = new Scanner(System.in);
+                transfers = restTemplate.exchange(baseUrl + "transfer/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), DisplayTransfer[].class).getBody();
+                System.out.println("------------------------------\n" +
+                        "Transfers\n" + "ID\t\tFrom/To" + "\t\t" + "Amount\n" +
+                        "------------------------------");
+                String fromOrTo = "";
+                String name = "";
+
+                for (DisplayTransfer i : transfers) {
+                    if (currentUser.getUser().getId() == (Integer.parseInt(i.getUserFrom()))) {
+                        fromOrTo = "From: ";
+                        name = i.getUserTo();
+                    } else {
+                        fromOrTo = "To: ";
+                        name = i.getUserFrom();
+                    }
+
+
+
+
+                    }
+                }
+
+
+
+
 
     private HttpEntity makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();

@@ -47,7 +47,7 @@ public class TransferDaoJdbc implements TransferDao {
                 "JOIN account a1 ON t.account_to = a1.account_id " +
                 "JOIN tenmo_user u1 ON a1.user_id = u1.user_id " +
                 "WHERE u.user_id = ? OR u1.user_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, user_id);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, user_id, user_id);
         while (results.next()) {
             DisplayTransfer displayTransfer = mapRowToDisplayTransfer(results);
             transferList.add(displayTransfer);

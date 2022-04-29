@@ -7,6 +7,7 @@ import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
 import com.techelevator.tenmo.services.TransferService;
+import org.apiguardian.api.API;
 
 import java.math.BigDecimal;
 
@@ -101,7 +102,9 @@ public class App {
 	}
 
 	private void viewTransferHistory() {
-		// TODO Auto-generated method stub
+		TransferService transferService = new TransferService(API_BASE_URL, currentUser);
+        transferService.setAuthToken(currentUser.getToken());
+        transferService.viewTransferHistory();
 		
 	}
 
