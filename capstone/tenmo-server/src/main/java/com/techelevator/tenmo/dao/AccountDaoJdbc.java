@@ -1,10 +1,7 @@
 package com.techelevator.tenmo.dao;
 
 import com.techelevator.tenmo.model.Account;
-<<<<<<< HEAD
 import com.techelevator.tenmo.model.User;
-=======
->>>>>>> f52de27e0fa660ba2afab6e6924fa100067a641d
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
@@ -50,7 +47,6 @@ public class AccountDaoJdbc implements AccountDao {
         } catch (DataAccessException e) {
             System.out.println("Error accessing data");
 
-<<<<<<< HEAD
         }
         return getBalance(UserId);
 
@@ -78,24 +74,5 @@ public class AccountDaoJdbc implements AccountDao {
         account.setBalance(results.getBigDecimal("balance"));
         return account;
 
-=======
-        }
-        return getBalance(UserId);
-
-
-    }
-
-    @Override
-    public BigDecimal subtractBalance(BigDecimal amount, int UserId) {
-
-        try {
-            String sql = "UPDATE account SET balance = balance - ? WHERE user_id = ?";
-            jdbcTemplate.update(sql, amount, UserId);
-        } catch (DataAccessException e) {
-            System.out.println("Error accessing data");
-
-        }
-        return getBalance(UserId);
->>>>>>> f52de27e0fa660ba2afab6e6924fa100067a641d
     }
 }
