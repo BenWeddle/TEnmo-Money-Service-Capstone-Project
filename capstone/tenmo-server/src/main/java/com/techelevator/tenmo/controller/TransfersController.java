@@ -16,11 +16,7 @@ public class TransfersController {
     @Autowired
     private TransferDao transfersDao;
 
-<<<<<<< HEAD
-    @PostMapping("account/transfer")
-=======
     @PostMapping("/transfer")
->>>>>>> f52de27e0fa660ba2afab6e6924fa100067a641d
     public boolean makeTransfer(@RequestBody Transfer transfer) {
 
         transfersDao.sendTransfer(transfer);
