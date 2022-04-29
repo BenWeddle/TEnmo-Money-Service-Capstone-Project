@@ -2,6 +2,7 @@ package com.techelevator.tenmo.controller;
 
 
 import com.techelevator.tenmo.dao.TransferDao;
+import com.techelevator.tenmo.model.DisplayTransfer;
 import com.techelevator.tenmo.model.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,8 +26,8 @@ public class TransfersController {
     }
 
     @GetMapping("transfer/{id}")
-    public List<Transfer> getAllTransfers(@PathVariable int id){
-        List<Transfer> results = transfersDao.getAllTransfers(id);
+    public List<DisplayTransfer> getAllTransfers(@PathVariable int id){
+        List<DisplayTransfer> results = transfersDao.getAllTransfers(id);
 
         return results;
     }
