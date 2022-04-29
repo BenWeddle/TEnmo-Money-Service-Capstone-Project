@@ -6,6 +6,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class TransferDaoJdbc implements TransferDao {
 
@@ -21,7 +24,9 @@ public class TransferDaoJdbc implements TransferDao {
 
     @Override
     public void sendTransfer(Transfer transfers) {
-
+//        if (transfers.getUserFrom() == transfers.getUserTo()) {
+//            System.out.println("You cant send money to yourself.");
+//        }
         accountDao.subtractBalance(transfers.getAmount(), transfers.getUserFrom());
         accountDao.addBalance(transfers.getAmount(), transfers.getUserTo());
         String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
@@ -31,8 +36,15 @@ public class TransferDaoJdbc implements TransferDao {
 
     }
 
+    @Override
+    public List<Transfer> getAllTransfers(int id) {
+        List<Transfer> transferList = new ArrayList<>();
+        String sql = "SELECT *"
+        return null;
+    }
 
-        private Transfer mapRowToTransfer(SqlRowSet results) {
+
+    private Transfer mapRowToTransfer(SqlRowSet results) {
             Transfer transfer = new Transfer();
             transfer.setTransferId(results.getInt("transfer_id"));
             transfer.setTransferTypeId(results.getInt("transfer_type_id"));

@@ -47,14 +47,14 @@ public class TransferService {
             transfer.setUserFrom(currentUser.getUser().getId());
             if (transfer.getUserTo() != 0) {
                 System.out.println("Enter amount: ");
+
                 try {
                     transfer.setAmount(new BigDecimal(Double.parseDouble(scanner.nextLine())));
                 } catch (NumberFormatException e) {
                     System.out.println("Error when entering amount: ");
                 }
-                System.out.println(transfer);
                 restTemplate.exchange(baseUrl + "transfer", HttpMethod.POST, makeTransferEntity(transfer), boolean.class);
-                System.out.println("Completed");
+                System.out.println("Transfer Successful");
             }
         } catch (Exception e) {
             System.out.println("Invalid" + e.getMessage());

@@ -41,8 +41,4 @@ public class AccountController {
         return userDao.getAllUsers();
     }
 
-//    @GetMapping("/balance/{id}")
-//    public BigDecimal addBalance() {
-//
-//    }
 }
