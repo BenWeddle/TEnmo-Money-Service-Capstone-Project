@@ -21,10 +21,11 @@ public class TransferDaoJdbc implements TransferDao {
 
     @Override
     public void sendTransfer(Transfer transfers) {
+
         accountDao.subtractBalance(transfers.getAmount(), transfers.getUserFrom());
         accountDao.addBalance(transfers.getAmount(), transfers.getUserTo());
         String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
-                "VALUES (?, ?, ?, ?, ?);";
+                "VALUES (?, ?, (SELECT account_id FROM account WHERE user_id = ?), (SELECT account_id FROM account WHERE user_id = ?), ?);";
         jdbcTemplate.update(sql, 2, 2, transfers.getUserFrom(), transfers.getUserTo(), transfers.getAmount());
 
 

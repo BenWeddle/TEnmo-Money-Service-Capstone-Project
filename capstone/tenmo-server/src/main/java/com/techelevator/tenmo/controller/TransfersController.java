@@ -18,7 +18,7 @@ public class TransfersController {
 
     @PostMapping("/transfer")
     public boolean makeTransfer(@RequestBody Transfer transfer) {
-
+        System.out.println("Making transfer");
         transfersDao.sendTransfer(transfer);
 
         return true;

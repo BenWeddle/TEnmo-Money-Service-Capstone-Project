@@ -6,6 +6,7 @@ import com.techelevator.tenmo.model.User;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -42,27 +43,36 @@ public class TransferService {
             }
             System.out.println("-----------------------------\n"
                     + "Enter Id of user you are sending to (0 to cancel): ");
-            transfer.setAccountTo(Integer.parseInt(scanner.nextLine()));
-            transfer.setAccountFrom(currentUser.getUser().getId());
-            if (transfer.getAccountTo() != 0) {
+            transfer.setUserTo(Integer.parseInt(scanner.nextLine()));
+            transfer.setUserFrom(currentUser.getUser().getId());
+            if (transfer.getUserTo() != 0) {
                 System.out.println("Enter amount: ");
                 try {
                     transfer.setAmount(new BigDecimal(Double.parseDouble(scanner.nextLine())));
                 } catch (NumberFormatException e) {
                     System.out.println("Error when entering amount: ");
                 }
-                String amount = restTemplate.exchange(baseUrl + "account/transfer", HttpMethod.POST, makeAuthEntity(), String.class).getBody();
-                System.out.println(amount);
+                System.out.println(transfer);
+                restTemplate.exchange(baseUrl + "transfer", HttpMethod.POST, makeTransferEntity(transfer), boolean.class);
+                System.out.println("Completed");
             }
         } catch (Exception e) {
-            System.out.println("Invalid");
+            System.out.println("Invalid" + e.getMessage());
         }
 
     }
 
     private HttpEntity makeAuthEntity() {
         HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(authToken);
         return new HttpEntity<>(headers);
+    }
+
+    private HttpEntity makeTransferEntity(Transfer transfer) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(authToken);
+        return new HttpEntity<>(transfer, headers);
     }
 }
