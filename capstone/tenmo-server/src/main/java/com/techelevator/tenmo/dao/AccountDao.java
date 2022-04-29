@@ -13,8 +13,5 @@ public interface AccountDao {
     BigDecimal subtractBalance (BigDecimal amount, int UserId);
 
 
-<<<<<<< HEAD
 
-=======
->>>>>>> f52de27e0fa660ba2afab6e6924fa100067a641d
 }
