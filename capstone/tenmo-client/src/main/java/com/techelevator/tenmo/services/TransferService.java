@@ -65,9 +65,10 @@ public class TransferService {
 
         public void viewTransferHistory() {
             DisplayTransfer[] transfers = null;
+//            try {
 
 
-                Scanner scanner = new Scanner(System.in);
+//                Scanner scanner = new Scanner(System.in);
                 transfers = restTemplate.exchange(baseUrl + "transfer/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), DisplayTransfer[].class).getBody();
                 System.out.println("------------------------------\n" +
                         "Transfers\n" + "ID\t\tFrom/To" + "\t\t" + "Amount\n" +
@@ -83,12 +84,38 @@ public class TransferService {
                         fromOrTo = "To: ";
                         name = i.getUserFrom();
                     }
-
-
-
-
-                    }
                 }
+                System.out.println("------------------------------\n" +
+                        "Enter transfer ID to view details (0 to cancel): ");
+
+//                Scanner scanner = new Scanner(System.in);
+//                String input = scanner.nextLine();
+//                if (Integer.parseInt(input) != 0) {
+//                    boolean foundTransferId = false;
+//                    for (DisplayTransfer i : transfers) {
+//                        if (Integer.parseInt(input) == i.getTransferId()) {
+//                            DisplayTransfer temp = restTemplate.exchange(baseUrl + "transfer/" + i.getTransferId(), HttpMethod.GET, makeAuthEntity(), DisplayTransfer.class).getBody();
+//                            foundTransferId = true;
+//                            System.out.println("------------------------------\n +" +
+//                            "Transfer Details\n" +
+//                            "------------------------------\n" +
+//                            "Id: " + temp.getTransferId() + "\n" +
+//                            "From: " + temp.getUserFrom() + "\n" +
+//                            "To : " + temp.getUserTo() + "\n" +
+//                            "Type: " + temp.getTransferTypeId() + "\n" +
+//                            "Status: " + temp.getTransferStatusId() + "\n" +
+//                            "Amount: $" + temp.getAmount());
+//                        }
+//                    }
+//                    if (!foundTransferId) {
+//                        System.out.println("not a valid transfer ID");
+//                    }
+//                }
+//            }catch (Exception e){
+//                System.out.println("Something went wrong");
+//            }
+
+        }
 
 
 
