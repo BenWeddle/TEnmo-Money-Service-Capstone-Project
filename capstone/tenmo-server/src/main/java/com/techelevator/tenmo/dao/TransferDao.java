@@ -9,4 +9,6 @@ public interface TransferDao {
     public void sendTransfer(Transfer transfers);
 
     List<DisplayTransfer> getAllTransfers(int id);
+
+    public Transfer getSelectedTransfer(int id, int transferId);
 }

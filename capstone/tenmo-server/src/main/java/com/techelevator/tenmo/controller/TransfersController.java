@@ -27,10 +27,17 @@ public class TransfersController {
     }
 
     @GetMapping("transfer/{id}")
-    public List<DisplayTransfer> getAllTransfers(@PathVariable int id){
+    public List<DisplayTransfer> getAllTransfers(@PathVariable int id) {
         List<DisplayTransfer> results = transfersDao.getAllTransfers(id);
 
         return results;
+    }
+
+    @GetMapping("transfer/{id}")
+    public Transfer getSelectedTransfer(@PathVariable int id,int transferId) {
+        Transfer transfer = transfersDao.getSelectedTransfer(id, transferId);
+
+        return transfer;
     }
 
 }

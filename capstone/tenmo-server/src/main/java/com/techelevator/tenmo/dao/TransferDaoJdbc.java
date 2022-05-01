@@ -29,12 +29,11 @@ public class TransferDaoJdbc implements TransferDao {
             System.out.println("You cant send money to yourself.");
         }
 
-     accountDao.subtractBalance(transfers.getAmount(), transfers.getUserFrom());
-            accountDao.addBalance(transfers.getAmount(), transfers.getUserTo());
-            String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
-                    "VALUES (?, ?, (SELECT account_id FROM account WHERE user_id = ?), (SELECT account_id FROM account WHERE user_id = ?), ?);";
-            jdbcTemplate.update(sql, 2, 2, transfers.getUserFrom(), transfers.getUserTo(), transfers.getAmount());
-
+        accountDao.subtractBalance(transfers.getAmount(), transfers.getUserFrom());
+        accountDao.addBalance(transfers.getAmount(), transfers.getUserTo());
+        String sql = "INSERT INTO transfer (transfer_type_id, transfer_status_id, account_from, account_to, amount) " +
+                "VALUES (?, ?, (SELECT account_id FROM account WHERE user_id = ?), (SELECT account_id FROM account WHERE user_id = ?), ?);";
+        jdbcTemplate.update(sql, 2, 2, transfers.getUserFrom(), transfers.getUserTo(), transfers.getAmount());
 
 
     }
@@ -57,17 +56,38 @@ public class TransferDaoJdbc implements TransferDao {
         return transferList;
     }
 
+    @Override
+    public Transfer getSelectedTransfer(int transferId) {
+        Transfer transfer = new Transfer();
+        String sql = "SELECT t.transfer_id, u.username AS user_from, u1.username AS user_to, tt.transfer_type_desc, ts.transfer_status_desc, t.amount\n" +
+                "FROM transfer t " +
+                "JOIN account a ON t.account_from = a.account_id " +
+                "JOIN account a1 ON t.account_to = a1.account_id " +
+                "JOIN tenmo_user u ON a.user_id = u.user_id " +
+                "JOIN tenmo_user u1 ON a1.user_id = u1.user_id " +
+                "JOIN transfer_status ts ON t.transfer_status_id = ts.transfer_status_id " +
+                "JOIN transfer_type tt ON t.transfer_type_id = tt.transfer_type_id " +
+                "WHERE transfer_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, transferId);
+        if (results.next()) {
+            transfer = mapRowToTransfer(results);
+        }
+
+        return transfer;
+    }
+
 
     private Transfer mapRowToTransfer(SqlRowSet results) {
-            Transfer transfer = new Transfer();
-            transfer.setTransferId(results.getInt("transfer_id"));
-            transfer.setTransferTypeId(results.getInt("transfer_type_id"));
-            transfer.setTransferStatusId(results.getInt("transfer_status_id"));
-            transfer.setAccountFrom(results.getInt("account_from"));
-            transfer.setAccountTo(results.getInt("account_to"));
-            transfer.setAmount(results.getBigDecimal("amount"));
-            return transfer;
-        }
+        Transfer transfer = new Transfer();
+        transfer.setTransferId(results.getInt("transfer_id"));
+        transfer.setTransferTypeId(results.getInt("transfer_type_id"));
+        transfer.setTransferStatusId(results.getInt("transfer_status_id"));
+        transfer.setAccountFrom(results.getInt("account_from"));
+        transfer.setAccountTo(results.getInt("account_to"));
+        transfer.setAmount(results.getBigDecimal("amount"));
+        return transfer;
+    }
+
     private DisplayTransfer mapRowToDisplayTransfer(SqlRowSet results) {
         DisplayTransfer displayTransfer = new DisplayTransfer();
         displayTransfer.setTransferId(results.getInt("transfer_id"));
