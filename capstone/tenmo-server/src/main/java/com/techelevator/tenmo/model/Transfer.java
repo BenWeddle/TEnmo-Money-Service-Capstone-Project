@@ -1,5 +1,7 @@
 package com.techelevator.tenmo.model;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 
 public class Transfer {
@@ -8,6 +10,7 @@ public class Transfer {
     private int transferStatusId;
     private int accountFrom;
     private int accountTo;
+    @DecimalMin("0.0")
     private BigDecimal amount;
     private int userFrom;
     private int userTo;

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -18,7 +19,7 @@ public class TransfersController {
     private TransferDao transfersDao;
 
     @PostMapping("/transfer")
-    public boolean makeTransfer(@RequestBody Transfer transfer) {
+    public boolean makeTransfer(@Valid @RequestBody Transfer transfer) {
         System.out.println("Making transfer");
         transfersDao.sendTransfer(transfer);
 
