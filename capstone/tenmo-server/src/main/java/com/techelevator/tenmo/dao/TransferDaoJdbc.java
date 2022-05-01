@@ -85,6 +85,9 @@ public class TransferDaoJdbc implements TransferDao {
         transfer.setAccountFrom(results.getInt("account_from"));
         transfer.setAccountTo(results.getInt("account_to"));
         transfer.setAmount(results.getBigDecimal("amount"));
+        transfer.setTransferType(results.getString("transfer_type_desc"));
+        transfer.setTransferStatus(results.getString("transfer_status_desc"));
+
         return transfer;
     }
 

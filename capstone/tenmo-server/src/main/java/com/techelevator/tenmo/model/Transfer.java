@@ -5,15 +5,33 @@ import javax.validation.constraints.DecimalMin;
 import java.math.BigDecimal;
 
 public class Transfer {
+    private String transferType;
+    private String transferStatus;
     private int transferId;
     private int transferTypeId;
     private int transferStatusId;
     private int accountFrom;
     private int accountTo;
-    @DecimalMin("0.0")
+    @DecimalMin(value = "0.0", message = "Cannot send a negative amount")
     private BigDecimal amount;
     private int userFrom;
     private int userTo;
+
+    public String getTransferType() {
+        return transferType;
+    }
+
+    public void setTransferType(String transferType) {
+        this.transferType = transferType;
+    }
+
+    public String getTransferStatus() {
+        return transferStatus;
+    }
+
+    public void setTransferStatus(String transferStatus) {
+        this.transferStatus = transferStatus;
+    }
 
     public int getUserFrom() {
         return userFrom;

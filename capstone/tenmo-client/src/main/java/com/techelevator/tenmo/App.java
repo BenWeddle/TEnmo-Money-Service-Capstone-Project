@@ -67,6 +67,7 @@ public class App {
         accountService.setAuthToken(currentUser.getToken());
         if (currentUser == null) {
             consoleService.printErrorMessage();
+
         }
     }
 

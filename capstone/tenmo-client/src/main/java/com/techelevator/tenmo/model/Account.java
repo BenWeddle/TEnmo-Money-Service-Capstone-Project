@@ -8,7 +8,7 @@ import javax.validation.constraints.Min;
 public class Account {
     private int accountId;
     private int userId;
-    @DecimalMin("0.0")
+    @DecimalMin(value = "0.0", message = "Cannot send a negative amount")
     private BigDecimal balance;
 
     public int getAccountId() {

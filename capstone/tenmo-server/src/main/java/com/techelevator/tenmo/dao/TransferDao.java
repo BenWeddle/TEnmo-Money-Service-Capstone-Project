@@ -10,5 +10,5 @@ public interface TransferDao {
 
     List<DisplayTransfer> getAllTransfers(int id);
 
-    public Transfer getSelectedTransfer(int id, int transferId);
+    public Transfer getSelectedTransfer(int transferId);
 }

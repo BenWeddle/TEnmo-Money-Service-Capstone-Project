@@ -1,9 +1,6 @@
 package com.techelevator.tenmo.services;
 
-import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.DisplayTransfer;
-import com.techelevator.tenmo.model.Transfer;
-import com.techelevator.tenmo.model.User;
+import com.techelevator.tenmo.model.*;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -32,6 +29,7 @@ public class TransferService {
     public void sendBucks() {
         User[] users = null;
         Transfer transfer = new Transfer();
+        Account account = new Account();
 
         try {
             Scanner scanner = new Scanner(System.in);
@@ -48,8 +46,10 @@ public class TransferService {
                     + "Enter Id of user you are sending to (0 to cancel): ");
             transfer.setUserTo(Integer.parseInt(scanner.nextLine()));
             transfer.setUserFrom(currentUser.getUser().getId());
-            if (transfer.getUserTo() != 0) {
+            if (transfer.getUserTo() != 0); {
                 System.out.println("Enter amount: ");
+
+
 
                 try {
                     transfer.setAmount(new BigDecimal(Double.parseDouble(scanner.nextLine())));
@@ -66,13 +66,13 @@ public class TransferService {
 
     public void viewTransferHistory() {
         DisplayTransfer[] transfers = null;
-            try {
+//            try {
 
 
         Scanner scanner = new Scanner(System.in);
-        transfers = restTemplate.exchange(baseUrl + "transfer/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), DisplayTransfer[].class).getBody();
+        transfers = restTemplate.exchange(baseUrl + "account/transfer/" + currentUser.getUser().getId(), HttpMethod.GET, makeAuthEntity(), DisplayTransfer[].class).getBody();
         System.out.println("------------------------------\n" +
-                "Transfers\n" + "ID\t\tFrom/To" + "\t\t" + "Amount\n" +
+                "Transfers\n" + "ID\t\tFrom/To" + "\t\t\t" + "Amount\n" +
                 "------------------------------");
         String fromOrTo = "";
         String name = "";
@@ -81,11 +81,11 @@ public class TransferService {
             if( currentUser.getUser().getUsername().equals(i.getUserFrom())) {
                 fromOrTo = "From: ";
                 name = i.getUserTo();
-                System.out.println(i.getTransferId() + "\t" + fromOrTo + name + "\t" + i.getAmount());
+                System.out.println(i.getTransferId() + "\t" + fromOrTo + name + "\t\t" + i.getAmount());
             } else {
                 fromOrTo = "To: ";
                 name = i.getUserFrom();
-                System.out.println(i.getTransferId() + "\t" + fromOrTo + name + "\t" + i.getAmount());
+                System.out.println(i.getTransferId() + "\t" + fromOrTo + name + "\t\t\t" + i.getAmount());
             }
         }
         System.out.println("------------------------------\n" +
@@ -114,12 +114,12 @@ public class TransferService {
                         System.out.println("not a valid transfer ID");
                     }
                 }
-            }catch (Exception e){
-                System.out.println("Something went wrong");
+//            }catch (Exception e){
+//                System.out.println("Something went wrong");
             }
 
 
-    }
+
 
 
     private HttpEntity makeAuthEntity() {

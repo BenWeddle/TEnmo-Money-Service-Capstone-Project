@@ -26,7 +26,7 @@ public class TransfersController {
         return true;
     }
 
-    @GetMapping("transfer/{id}")
+    @GetMapping("account/transfer/{id}")
     public List<DisplayTransfer> getAllTransfers(@PathVariable int id) {
         List<DisplayTransfer> results = transfersDao.getAllTransfers(id);
 
@@ -34,8 +34,8 @@ public class TransfersController {
     }
 
     @GetMapping("transfer/{id}")
-    public Transfer getSelectedTransfer(@PathVariable int id,int transferId) {
-        Transfer transfer = transfersDao.getSelectedTransfer(id, transferId);
+    public Transfer getSelectedTransfer(@PathVariable("id") int transferId) {
+        Transfer transfer = transfersDao.getSelectedTransfer(transferId);
 
         return transfer;
     }
